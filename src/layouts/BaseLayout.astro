@@ -1,3 +1,11 @@
+---
+import '../styles/global.css';
+import { getGlobalPageData } from '../lib/loader';
+import Header from '../components/Header.astro';
+
+const data = await getGlobalPageData();
+const { header, banner, footer } = data;
+---
 <!doctype html>
 <html lang="en">
 	<head>
@@ -9,6 +17,7 @@
 		<title>Astro Basics</title>
 	</head>
 	<body>
+		<Header data={header}/>
 		<slot />
 	</body>
 </html>
