@@ -1,11 +1,17 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import BlockRenderer from "../components/blocks/BlockRenderer.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import { getLandingPageData } from "../lib/loader";
+
+const data = await getLandingPageData();
+
+const landingPage = data?.data;
+
+if (!landingPage) throw new Error("Landing page not found");
 ---
 
 <BaseLayout>
-	<Welcome />
+  <BlockRenderer blocks={landingPage.blocks} />
 </BaseLayout>
+

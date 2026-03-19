@@ -1,62 +1,5 @@
 import { client } from "./strapi-client";
-const blocksPopulate = {
-  on: {
-    "blocks.hero": {
-      populate: {
-        image: {
-          fields: ["url", "alternativeText"],
-        },
-        links: true,
-      },
-    },
-    "blocks.heading-section": true,
-    "blocks.card-grid": {
-      populate: {
-        card: true,
-      },
-    },
-    "blocks.content-with-image": {
-      populate: {
-        image: {
-          fields: ["url", "alternativeText"],
-        },
-        link: true,
-      },
-    },
-    "blocks.faqs": {
-      populate: {
-        faq: true,
-      },
-    },
-    "blocks.person-card": {
-      populate: {
-        image: {
-          fields: ["url", "alternativeText"],
-        },
-      },
-    },
-    "blocks.markdown": true,
-    "blocks.featured-articles": {
-      populate: {
-        articles: {
-          populate: {
-            featuredImage: {
-              fields: ["url", "alternativeText"],
-            },
-            author: {
-              populate: {
-                image: {
-                  fields: ["url", "alternativeText"],
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    "blocks.newsletter": true,
-  },
-};
+import { blocksPopulate } from "./populate";
 
 async function getSingleType(name: string, params: object) {
   const data = await client.single(name).find(params);
@@ -134,16 +77,15 @@ async function getPageBySlug(slug: string) {
   const data = await client.collection("pages").find({
     filters: { slug: { $eq: slug } },
     populate: { blocks: blocksPopulate },
-  })
-  return data.data?.[0]
+  });
+  return data.data?.[0];
 }
-
 
 //ARTICLES
 
-async function getArticles(){
-    return client.collection("articles").find({
-          populate: {
+async function getArticles() {
+  return client.collection("articles").find({
+    populate: {
       featuredImage: { fields: ["url", "alternativeText"] },
       author: {
         populate: {
@@ -152,8 +94,9 @@ async function getArticles(){
       },
       contentTag: true,
     },
-    })
-} async function getArticleBySlug(slug: string) {
+  });
+}
+async function getArticleBySlug(slug: string) {
   const data = await client.collection("articles").find({
     filters: { slug: { $eq: slug } },
     populate: {
@@ -169,4 +112,11 @@ async function getArticles(){
   return data.data?.[0];
 }
 
-export { getGlobalPageData, getLandingPageData, getArticles, getPages, getPageBySlug, getArticleBySlug };
+export {
+  getGlobalPageData,
+  getLandingPageData,
+  getArticles,
+  getPages,
+  getPageBySlug,
+  getArticleBySlug,
+};

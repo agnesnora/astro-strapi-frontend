@@ -44,17 +44,13 @@ export type ComponentType =
   | "blocks.featured-articles"
   | "blocks.newsletter";
 
-export interface Base<
-  T extends ComponentType,
-  D extends object = Record<string, unknown>,
-> {
+export interface Base<T extends ComponentType> {
   id?: number;
   __component: T;
   documentId?: string;
   createdAt?: string;
   updatedAt?: string;
   publishedAt?: string;
-  data?: D;
 }
 
 export interface HeroProps extends Base<"blocks.hero"> {
