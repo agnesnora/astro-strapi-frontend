@@ -14,6 +14,17 @@ export const blocksPopulate = {
         card: true,
       },
     },
+    "blocks.plant-grid": {
+      populate: {
+        plantCard: {
+          populate: {
+            image: {
+              fields: ["alternativeText", "url"],
+            },
+          },
+        },
+      },
+    },
     "blocks.content-with-image": {
       populate: {
         image: {

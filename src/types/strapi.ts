@@ -37,6 +37,7 @@ export type ComponentType =
   | "blocks.hero"
   | "blocks.heading-section"
   | "blocks.card-grid"
+  | "blocks.plant-grid"
   | "blocks.content-with-image"
   | "blocks.faqs"
   | "blocks.person-card"
@@ -71,6 +72,14 @@ export interface CardGridProps extends Base<"blocks.card-grid"> {
     id: number;
     heading: string;
     text: string;
+    image: Image;
+  }[];
+}
+export interface PlantGridProps extends Base<"blocks.plant-grid"> {
+  plantCard: {
+    id: number;
+    title: string;
+    description: string;
     image: Image;
   }[];
 }
@@ -137,6 +146,7 @@ export type BlockData =
   | PersonCardProps
   | MarkdownProps
   | FeaturedArticlesProps
+  | PlantGridProps
   | NewsletterProps;
 
 export interface Author {

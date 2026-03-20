@@ -9,12 +9,14 @@ import PersonCard from "./PersonCard.astro";
 import Markdown from "./Markdown.astro";
 import FeaturedArticles from "./FeaturedArticles.astro";
 import Newsletter from "./Newsletter.astro";
+import PlantGrid from "./PlantGrid.astro";
 
 
 const componentMap: Record<ComponentType, any> = {
   "blocks.hero": Hero,
   "blocks.heading-section": HeadingSection, 
   "blocks.card-grid": CardGrid,
+  "blocks.plant-grid":PlantGrid,
   "blocks.content-with-image": ContentWithImage,
   "blocks.faqs": Faqs,
   "blocks.person-card": PersonCard,
@@ -29,7 +31,7 @@ const { blocks } = Astro.props;
 <div class="block-renderer">
   {
     blocks.map((block: BlockData) => { 
-      // console.log(block, "block.data");
+      console.log(block, "block.data");
       const Component = componentMap[block.__component];
       return Component ? <Component data={block} /> : null;
     })
