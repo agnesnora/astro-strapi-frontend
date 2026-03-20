@@ -138,3 +138,28 @@ export type BlockData =
   | MarkdownProps
   | FeaturedArticlesProps
   | NewsletterProps;
+
+export interface Author {
+  id: number;
+  documentId: string;
+  fullName: string;
+  image: Image;
+}
+
+export interface Article {
+  id: number;
+  documentId: string;
+  title: string;
+  description: string;
+  slug: string;
+  content: string;
+  publishedAt: string;
+  updatedAt: string;
+  featuredImage: Image;
+  author: Author;
+  contentTag?: {
+    id: number;
+    documentId: string;
+    name: string;
+  };
+}

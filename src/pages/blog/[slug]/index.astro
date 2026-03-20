@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getArticles, getGlobalPageData } from '../../../lib/loader';
+import StrapiImage from '../../../components/StrapiImage.astro';
+import { marked } from 'marked';
+import type { Article } from '../../../types/strapi';
+
+// Dinamikus útvonalak generálása
+export async function getStaticPaths() {
+  const articles = await getArticles();
+  return articles.data?.map((article: any) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+const { article }: { article: Article } = Astro.props;
+const globalData = await getGlobalPageData();
+const htmlContent = article.content ? marked(article.content) : '';
+---
+
+<BaseLayout globalData={globalData}>
+  <article class="py-16">
+    <div class="container mx-auto px-4 max-w-4xl">
+      
+      {/* Cikk fejléc */}
+      <header class="mb-8">
+        <h1 class="text-4xl font-bold mb-4">{article.title}</h1>
+        <p class="text-gray-600 text-lg mb-4">{article.description}</p>
+        
+        {/* Szerző és dátum */}
+        <div class="flex items-center gap-4">
+          {article.author?.image && (
+            <StrapiImage 
+              image={article.author.image} 
+              class="w-12 h-12 rounded-full object-cover"
+            />
+          )}
+          <div>
+            <p class="font-semibold">{article.author?.fullName}</p>
+            <p class="text-sm text-gray-500">
+              {new Date(article.publishedAt).toLocaleDateString('hu-HU')}
+            </p>
+          </div>
+        </div>
+      </header>
+      
+      {/* Kiemelt kép */}
+      {article.featuredImage && (
+        <StrapiImage 
+          image={article.featuredImage} 
+          class="w-full h-96 object-cover rounded-lg mb-8"
+        />
+      )}
+      
+      {/* Cikk tartalma */}
+      <div class="prose prose-lg max-w-none" set:html={htmlContent} />
+      
+    </div>
+  </article>
+</BaseLayout>

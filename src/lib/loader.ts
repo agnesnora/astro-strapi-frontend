@@ -1,5 +1,6 @@
 import { client } from "./strapi-client";
 import { blocksPopulate } from "./populate";
+import type { Article, Author } from "../types/strapi";
 
 async function getSingleType(name: string, params: object) {
   const data = await client.single(name).find(params);
