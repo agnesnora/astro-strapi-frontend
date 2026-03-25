@@ -1,17 +1,4 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import BlockRenderer from "../components/blocks/BlockRenderer.astro";
-
-import { getLandingPageData } from "../lib/loader";
-
-const data = await getLandingPageData();
-
-const landingPage = data?.data;
-
-if (!landingPage) throw new Error("Landing page not found");
+// Redirect root to default locale
+return Astro.redirect("/hu");
 ---
-
-<BaseLayout>
-  <BlockRenderer blocks={landingPage.blocks} />
-</BaseLayout>
-

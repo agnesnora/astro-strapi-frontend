@@ -1,0 +1,22 @@
+---
+import type { TitleProps } from "../../types/strapi";
+
+interface Props {
+  data: TitleProps;
+}
+
+const {
+  data: { mainTitle, subTitle },
+} = Astro.props;
+---
+
+<section>
+  <div class="py-8 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="max-w-md mx-auto text-center">
+        <span class="text-green-600 font-bold">{subTitle}</span>
+        <h2 class="text-4xl md:text-5xl font-bold">{mainTitle}</h2>
+      </div>
+    </div>
+  </div>
+</section>

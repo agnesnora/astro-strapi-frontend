@@ -6,8 +6,9 @@ async function getSingleType(name: string, params: object) {
   const data = await client.single(name).find(params);
   return data;
 }
-async function getGlobalPageData() {
+async function getGlobalPageData(locale: string = "hu") {
   const data = await getSingleType("global", {
+    locale: locale,
     populate: {
       banner: {
         populate: {
@@ -55,8 +56,9 @@ async function getGlobalPageData() {
   return globalData;
 }
 
-async function getLandingPageData() {
+async function getLandingPageData(locale: string = "hu") {
   const data = await getSingleType("landing-page", {
+    locale: locale,
     populate: {
       blocks: blocksPopulate,
     },
@@ -66,17 +68,19 @@ async function getLandingPageData() {
 // COLLECTION TYPES
 //PAGES
 
-async function getPages() {
+async function getPages(locale: string = "hu") {
   return client.collection("pages").find({
+    locale: locale,
     populate: {
       blocks: blocksPopulate,
     },
   });
 }
 
-async function getPageBySlug(slug: string) {
+async function getPageBySlug(slug: string, locale: string = "hu") {
   const data = await client.collection("pages").find({
     filters: { slug: { $eq: slug } },
+    locale: locale, // ← Strapi i18n locale
     populate: { blocks: blocksPopulate },
   });
   return data.data?.[0];
@@ -84,8 +88,9 @@ async function getPageBySlug(slug: string) {
 
 //ARTICLES
 
-async function getArticles() {
+async function getArticles(locale: string = "hu") {
   return client.collection("articles").find({
+    locale: locale,
     populate: {
       featuredImage: { fields: ["url", "alternativeText"] },
       author: {
@@ -97,9 +102,10 @@ async function getArticles() {
     },
   });
 }
-async function getArticleBySlug(slug: string) {
+async function getArticleBySlug(slug: string, locale: string = "hu") {
   const data = await client.collection("articles").find({
     filters: { slug: { $eq: slug } },
+    locale: locale,
     populate: {
       featuredImage: { fields: ["url", "alternativeText"] },
       author: {

@@ -11,7 +11,7 @@ export const blocksPopulate = {
     "blocks.heading-section": true,
     "blocks.card-grid": {
       populate: {
-        card: true,
+        cards: true,
       },
     },
     "blocks.plant-grid": {
@@ -38,6 +38,10 @@ export const blocksPopulate = {
         faq: true,
       },
     },
+    "blocks.fun-facts": {
+      populate: { listItem: true },
+    },
+    "blocks.title": true,
     "blocks.person-card": {
       populate: {
         image: {

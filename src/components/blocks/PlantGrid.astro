@@ -1,6 +1,6 @@
 ---
 import type { PlantGridProps } from "../../types/strapi";
-
+import StrapiImage from "../StrapiImage.astro";
 interface Props {
   data: PlantGridProps;
 }
@@ -15,19 +15,24 @@ const {
   <div class="pt-12 pb-20 bg-gray-50">
     <div class="container mx-auto px-4">
       <div class="flex flex-wrap -mx-4">
-        {
-          plantCard &&
-            plantCard.map((card) => {
-              return (
-                <div class="mb-12 lg:mb-0 w-full md:w-1/2 lg:w-1/4 px-4">
-                  <h4 class="mb-4 text-2xl font-bold font-heading">
-                    {card.title}
-                  </h4>
-                  <p class="text-gray-500 leading-loose">{card.description}</p>
-                </div>
-              );
-            })
-        }
+{
+  plantCard &&
+    plantCard.map((card) => {
+      return (
+        <div class="mb-12 lg:mb-0 w-full md:w-1/2 lg:w-1/4 px-4">
+            {card.image && (
+              <StrapiImage image={card.image} height={600} width={800} class="h-128 w-full max-w-lg object-cover rounded-3xl md:rounded-br-none" />
+            )}
+            <h4 class="mb-4 text-2xl font-bold font-heading">
+              {card.title}
+            </h4>
+            <p class="text-gray-500 leading-loose">{card.description}</p>
+            <p class="text-gray-500 leading-loose"><strong>Vízigény:</strong>{card.watering}</p>
+            <p class="text-gray-500 leading-loose"><strong>Nehézség:</strong>{card.difficulity}</p>
+        </div>
+      );
+    })
+}
       </div>
     </div>
   </div>

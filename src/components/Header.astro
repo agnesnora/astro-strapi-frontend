@@ -3,14 +3,31 @@ import type { GlobalPageHeader } from "../types/strapi";
 import StrapiImage from "./StrapiImage.astro";
 
 interface Props {
-  data: GlobalPageHeader
+  data: GlobalPageHeader;
+  locale?: string;
 }
 
 const {
   data: { logo, navItems, cta },
+  locale = "hu",
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
+
+// Helper function to localize paths
+function localizeHref(href: string | null | undefined): string {
+  // Handle null/undefined href - return a safe default
+  if (!href) {
+    return '#';
+  }
+  // If already starts with locale or is external/hash, return as-is
+  if (href.startsWith('/hu') || href.startsWith('/en') || 
+      href.startsWith('http') || href.startsWith('#') || href.startsWith('//')) {
+    return href;
+  }
+  // Add locale prefix
+  return `/${locale}${href.startsWith('/') ? href : '/' + href}`;
+}
 
 ---
 
@@ -38,8 +55,8 @@ const currentPath = Astro.url.pathname;
         navItems.map((item) => (
           <li>
             <a
-              class={`text-sm font-bold ${currentPath === item.href ? 'text-green-600' : 'text-gray-400 hover:text-gray-500'}`}
-              href={item.href}
+              class={`text-sm font-bold ${currentPath === localizeHref(item.href) ? 'text-green-600' : 'text-gray-400 hover:text-gray-500'}`}
+              href={localizeHref(item.href)}
               target={item.isExternal ? "_blank" : "_self"}
             >
               {item.label}
@@ -95,7 +112,7 @@ const currentPath = Astro.url.pathname;
               <li class="mb-1">
                 <a
                   class="block p-4 text-sm font-semibold text-gray-400 hover:bg-green-50 hover:text-green-600 rounded"
-                  href={item.href}
+                  href={localizeHref(item.href)}
                   target={item.isExternal ? "_blank" : "_self"}
                 >
                   {item.label}

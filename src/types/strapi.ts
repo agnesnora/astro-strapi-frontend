@@ -43,6 +43,9 @@ export type ComponentType =
   | "blocks.person-card"
   | "blocks.markdown"
   | "blocks.featured-articles"
+  | "blocks.fun-facts"
+  | "blocks.items"
+  | "blocks.title"
   | "blocks.newsletter";
 
 export interface Base<T extends ComponentType> {
@@ -68,7 +71,7 @@ export interface HeadingSectionProps extends Base<"blocks.heading-section"> {
 }
 
 export interface CardGridProps extends Base<"blocks.card-grid"> {
-  card: {
+  cards: {
     id: number;
     heading: string;
     text: string;
@@ -79,6 +82,9 @@ export interface PlantGridProps extends Base<"blocks.plant-grid"> {
   plantCard: {
     id: number;
     title: string;
+    light: string;
+    difficulity: string;
+    watering: string;
     description: string;
     image: Image;
   }[];
@@ -147,7 +153,9 @@ export type BlockData =
   | MarkdownProps
   | FeaturedArticlesProps
   | PlantGridProps
-  | NewsletterProps;
+  | NewsletterProps
+  | FunFactsProps
+  | TitleProps;
 
 export interface Author {
   id: number;
@@ -155,7 +163,18 @@ export interface Author {
   fullName: string;
   image: Image;
 }
-
+export interface TitleProps extends Base<"blocks.title"> {
+  mainTitle: string;
+  subTitle: string;
+}
+export interface ItemProps {
+  id: number;
+  text: string;
+}
+export interface FunFactsProps extends Base<"blocks.fun-facts"> {
+  title: string;
+  listItem: ItemProps[];
+}
 export interface Article {
   id: number;
   documentId: string;

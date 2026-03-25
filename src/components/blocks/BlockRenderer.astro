@@ -10,6 +10,8 @@ import Markdown from "./Markdown.astro";
 import FeaturedArticles from "./FeaturedArticles.astro";
 import Newsletter from "./Newsletter.astro";
 import PlantGrid from "./PlantGrid.astro";
+import FunFacts from "./FunFacts.astro";
+import Title from "./Title.astro";
 
 
 const componentMap: Record<ComponentType, any> = {
@@ -23,6 +25,9 @@ const componentMap: Record<ComponentType, any> = {
   "blocks.markdown": Markdown,
   "blocks.featured-articles": FeaturedArticles,
   "blocks.newsletter": Newsletter,
+  "blocks.fun-facts": FunFacts,
+  "blocks.title": Title,
+  "blocks.items": null,
 };
 
 const { blocks } = Astro.props;
