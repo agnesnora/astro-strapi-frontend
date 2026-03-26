@@ -10,7 +10,8 @@ const { slug } = Astro.params;
 const lang = "en";
 
 const plant = await getPlantBySlug(slug, "en");
-
+const currentPath = Astro.url.pathname;
+const locale = currentPath.startsWith('/en') ? 'en' : 'hu';
 
 
 if (!plant) {
@@ -32,7 +33,7 @@ export async function getStaticPaths() {
 const htmlContent = plant.description ? marked(plant.description) : '';
 ---
 
-<BaseLayout locale="en">
+<BaseLayout locale={locale}>
   <article class="py-16">
     <div class="container mx-auto px-4 max-w-4xl">
       

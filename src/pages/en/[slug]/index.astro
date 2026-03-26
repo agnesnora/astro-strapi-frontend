@@ -3,17 +3,27 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import BlockRenderer from '../../../components/blocks/BlockRenderer.astro';
 import { getPageBySlug, getPages } from '../../../lib/loader';
 
-const locale = "en";
+const currentPath = Astro.url.pathname;
+const locale = currentPath.startsWith('/en') ? 'en' : 'hu';
 
 export async function getStaticPaths() {
-  const locale = "en";
-  const pages = await getPages(locale);  
-  return pages.data?.map((page) => ({
-    params: { slug: page.slug },  
-    props: { page },               
-  }));
-}
+  const locales = ['hu', 'en'];
 
+  const paths = [];
+
+  for (const locale of locales) {
+    const pages = await getPages(locale);
+
+    for (const page of pages.data || []) {
+      paths.push({
+        params: { locale, slug: page.slug },
+        props: { page, locale },
+      });
+    }
+  }
+
+  return paths;
+}
 const { page } = Astro.props;
 ---
 

@@ -1,36 +1,37 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
-import { getArticles,getArticleBySlug} from '../../../../lib/loader';
+import { getArticles,getPlantBySlug, getPlants } from '../../../../lib/loader';
 import StrapiImage from '../../../../components/StrapiImage.astro';
 import { marked } from 'marked';
 import type { Article } from '../../../../types/strapi';
 
 
 const { slug } = Astro.params;
-const lang = "en";
+const lang = "hu";
 
-const article= await getArticleBySlug(slug, "en");
+const plant = await getPlantBySlug(slug, "hu");
 
-const currentPath = Astro.url.pathname;
-const locale = currentPath.startsWith('/en') ? 'en' : 'hu';
 
-if (!article) {
+
+if (!plant) {
   throw new Error("Plant not found");
 }
 
 export async function getStaticPaths() {
-  const articles = await getArticles("en");
+  const plants = await getPlants("hu");
 
-  console.log("EN ARTICLES:", articles.data.map(p=> p.slug));
+  console.log("EN ARTICLES:", plants.data.map(p=> p.slug));
 
-  return articles.data?.map((plant: any) => ({
+  return plants.data?.map((plant: any) => ({
     params: { slug: plant.slug },
   }));
 }
 
 
 // const globalData = await getGlobalPageData();
-const htmlContent = article.description ? marked(article.description) : '';
+const htmlContent = plant.description ? marked(plant.description) : '';
+const currentPath = Astro.url.pathname;
+const locale = currentPath.startsWith('/en') ? 'en' : 'hu';
 ---
 
 <BaseLayout locale={locale}>
@@ -39,17 +40,17 @@ const htmlContent = article.description ? marked(article.description) : '';
       
    
       <header class="mb-8">
-        <h1 class="text-4xl font-bold mb-4">{article.name}</h1>
-        <p class="text-gray-600 text-lg mb-4">{article.shortDescription}</p>
-          <p class="text-gray-600 text-lg mb-4">{article.description}</p>
+        <h1 class="text-4xl font-bold mb-4">{plant.name}</h1>
+        <p class="text-gray-600 text-lg mb-4">{plant.shortDescription}</p>
+          <p class="text-gray-600 text-lg mb-4">{plant.description}</p>
         
       
       </header>
       
    
-      {article.featuredImage && (
+      {plant.image && (
         <StrapiImage 
-          image={article.featuredImage} 
+          image={plant.image[0]} 
           class="w-full h-96 object-cover rounded-lg mb-8"
         />
       )}

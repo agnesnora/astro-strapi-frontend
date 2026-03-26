@@ -22,13 +22,14 @@ const article = await getArticleBySlug(slug, "hu");
 if (!article) {
   throw new Error("Article not found");
 }
-
+const currentPath = Astro.url.pathname;
+const locale = currentPath.startsWith('/en') ? 'en' : 'hu';
 
 // const globalData = await getGlobalPageData();
 const htmlContent = article.content ? marked(article.content) : '';
 ---
 
-<BaseLayout locale="hu">
+<BaseLayout locale={locale}>
   <article class="py-16">
     <div class="container mx-auto px-4 max-w-4xl">
       

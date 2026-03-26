@@ -7,10 +7,13 @@ import Banner from "../components/Banner.astro"
 
 interface Props {
   locale?: string;
+  page?: any;
 }
+const currentPath = Astro.url.pathname;
+const locale = currentPath.startsWith('/en') ? 'en' : 'hu';
 
-const { locale = 'hu' } = Astro.props;
 
+const { page } = Astro.props;
 const data = await getGlobalPageData(locale);
 const { header, banner, footer } = data;
 ---
@@ -26,9 +29,9 @@ const { header, banner, footer } = data;
 	</head>
 	<body>
 		{banner && <Banner data={banner}/>}
-		<Header data={header} locale={locale}/>
+		<Header data={header} locale={locale} page={page}/>
 		<slot />
-		<Footer data={footer}/>
+		<Footer data={footer} locale={locale}/>
 	</body>
 </html>
 

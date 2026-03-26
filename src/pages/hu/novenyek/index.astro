@@ -5,22 +5,22 @@ import StrapiImage from '../../../components/StrapiImage.astro';
 
 const globalData = await getGlobalPageData();
 
-const plantsData = await getPlants("en");
+const plantsData = await getPlants("hu");
 const plants: any[] = plantsData.data || [];
-
 
 const currentPath = Astro.url.pathname;
 const locale = currentPath.startsWith('/en') ? 'en' : 'hu';
+
 ---
 
 <BaseLayout locale={locale}>
   <section class="py-16">
     <div class="container mx-auto px-4">
-      <h1 class="text-4xl font-bold mb-8">Plants</h1>
+      <h1 class="text-4xl font-bold mb-8">Növények</h1>
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {plants.map((plant) => (
-          <a href={`/plants/${plant.slug}`} class="group">
+          <a href={`/novenyek/${plant.slug}`} class="group">
             <plant class=" overflow-hidden shadow-sm hover:shadow-md transition">
               {plant.image && (
                 <StrapiImage 
