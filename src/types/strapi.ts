@@ -192,3 +192,19 @@ export interface Article {
     name: string;
   };
 }
+
+export interface Plant {
+  id: number;
+  documentId: string;
+  name: string;
+  shortDescription: string;
+  description: string;
+  slug: string;
+
+  publishedAt: string;
+  updatedAt: string;
+  image: Image[];
+  watering: "low" | "moderate" | "high";
+  light: "low" | "moderate" | "high";
+  difficulty: "easy" | "medium" | "hard";
+}

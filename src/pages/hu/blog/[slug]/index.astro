@@ -1,25 +1,34 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { getArticles, getGlobalPageData } from '../../../lib/loader';
-import StrapiImage from '../../../components/StrapiImage.astro';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { getArticles, getArticleBySlug } from '../../../../lib/loader';
+import StrapiImage from '../../../../components/StrapiImage.astro';
 import { marked } from 'marked';
-import type { Article } from '../../../types/strapi';
+import type { Article } from '../../../../types/strapi';
 
-// Dinamikus útvonalak generálása
+
+
 export async function getStaticPaths() {
   const articles = await getArticles();
+
   return articles.data?.map((article: any) => ({
     params: { slug: article.slug },
-    props: { article },
   }));
 }
 
-const { article }: { article: Article } = Astro.props;
-const globalData = await getGlobalPageData();
+const { slug } = Astro.params;
+
+const article = await getArticleBySlug(slug, "hu");
+
+if (!article) {
+  throw new Error("Article not found");
+}
+
+
+// const globalData = await getGlobalPageData();
 const htmlContent = article.content ? marked(article.content) : '';
 ---
 
-<BaseLayout globalData={globalData}>
+<BaseLayout locale="hu">
   <article class="py-16">
     <div class="container mx-auto px-4 max-w-4xl">
       

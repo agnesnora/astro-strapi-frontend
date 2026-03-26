@@ -1,21 +1,21 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getArticles, getGlobalPageData } from '../../lib/loader';
-import StrapiImage from '../../components/StrapiImage.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getArticles } from '../../../lib/loader';
+import StrapiImage from '../../../components/StrapiImage.astro';
 
-const globalData = await getGlobalPageData();
-const articlesData = await getArticles();
+
+const articlesData = await getArticles("hu");
 const articles: any[] = articlesData.data || [];
 ---
 
-<BaseLayout globalData={globalData}>
+<BaseLayout locale="hu">
   <section class="py-16">
     <div class="container mx-auto px-4">
       <h1 class="text-4xl font-bold mb-8">Blog</h1>
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {articles.map((article) => (
-          <a href={`/blog/${article.slug}`} class="group">
+         <a href={`/hu/blog/${article.slug}`}>
             <article class="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
               {article.featuredImage && (
                 <StrapiImage 

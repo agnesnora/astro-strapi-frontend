@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getPlants, getGlobalPageData } from '../../../lib/loader';
+import StrapiImage from '../../../components/StrapiImage.astro';
+
+const globalData = await getGlobalPageData();
+
+const plantsData = await getPlants("en");
+const plants: any[] = plantsData.data || [];
+
+
+
+---
+
+<BaseLayout locale="en">
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl font-bold mb-8">Plants</h1>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {plants.map((plant) => (
+          <a href={`/en/plants/${plant.slug}`} class="group">
+            <plant class=" overflow-hidden shadow-sm hover:shadow-md transition">
+              {plant.image && (
+                <StrapiImage 
+                  image={plant.image[0]} 
+                  class="w-full h-48 object-cover"
+                />
+              )}
+              <div >
+                <h2 class="text-xl font-semibold group-hover:text-blue-600">
+                  {plant.name}
+                </h2>
+                <p class="text-gray-600 mt-2">{plant.shortDescription}</p>
+             
+              </div>
+            </plant>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

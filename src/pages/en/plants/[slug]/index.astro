@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { getArticles,getPlantBySlug, getPlants } from '../../../../lib/loader';
+import StrapiImage from '../../../../components/StrapiImage.astro';
+import { marked } from 'marked';
+import type { Article } from '../../../../types/strapi';
+
+
+const { slug } = Astro.params;
+const lang = "en";
+
+const plant = await getPlantBySlug(slug, "en");
+
+
+
+if (!plant) {
+  throw new Error("Plant not found");
+}
+
+export async function getStaticPaths() {
+  const plants = await getPlants("en");
+
+  console.log("EN ARTICLES:", plants.data.map(p=> p.slug));
+
+  return plants.data?.map((plant: any) => ({
+    params: { slug: plant.slug },
+  }));
+}
+
+
+// const globalData = await getGlobalPageData();
+const htmlContent = plant.description ? marked(plant.description) : '';
+---
+
+<BaseLayout locale="en">
+  <article class="py-16">
+    <div class="container mx-auto px-4 max-w-4xl">
+      
+   
+      <header class="mb-8">
+        <h1 class="text-4xl font-bold mb-4">{plant.name}</h1>
+        <p class="text-gray-600 text-lg mb-4">{plant.shortDescription}</p>
+          <p class="text-gray-600 text-lg mb-4">{plant.description}</p>
+        
+      
+      </header>
+      
+   
+      {plant.image && (
+        <StrapiImage 
+          image={plant.image[0]} 
+          class="w-full h-96 object-cover rounded-lg mb-8"
+        />
+      )}
+      
+     
+      <div class="prose prose-lg max-w-none" set:html={htmlContent} />
+      
+    </div>
+  </article>
+</BaseLayout>

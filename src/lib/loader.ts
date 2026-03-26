@@ -119,6 +119,32 @@ async function getArticleBySlug(slug: string, locale: string = "hu") {
   return data.data?.[0];
 }
 
+//PLANTS
+
+async function getPlants(locale: string = "hu") {
+  return client.collection("plants").find({
+    locale,
+    populate: {
+      image: {
+        fields: ["url", "alternativeText"],
+      },
+    },
+  });
+}
+async function getPlantBySlug(slug: string, locale: string = "hu") {
+  const data = await client.collection("plants").find({
+    filters: { slug: { $eq: slug } },
+    locale,
+    populate: {
+      image: {
+        fields: ["url", "alternativeText"],
+      },
+    },
+  });
+
+  return data.data?.[0];
+}
+
 export {
   getGlobalPageData,
   getLandingPageData,
@@ -126,4 +152,6 @@ export {
   getPages,
   getPageBySlug,
   getArticleBySlug,
+  getPlants,
+  getPlantBySlug,
 };
