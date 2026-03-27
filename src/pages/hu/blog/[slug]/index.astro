@@ -8,11 +8,10 @@ import type { Article } from '../../../../types/strapi';
 
 
 export async function getStaticPaths() {
-  const articles = await getArticles();
-
+  const articles = await getArticles('hu');
   return articles.data?.map((article: any) => ({
     params: { slug: article.slug },
-  }));
+  })) ?? [];
 }
 
 const { slug } = Astro.params;
