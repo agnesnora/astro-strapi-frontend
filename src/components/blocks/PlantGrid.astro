@@ -1,14 +1,40 @@
 ---
 import type { PlantGridProps } from "../../types/strapi";
 import StrapiImage from "../StrapiImage.astro";
+
 interface Props {
   data: PlantGridProps;
+  locale?: string;
 }
 
 const {
   data: { plantCard },
+  locale = 'hu',
 } = Astro.props;
 
+const labels = {
+  hu: { watering: 'Vízigény', difficulty: 'Nehézség', light: 'Fényigény' },
+  en: { watering: 'Watering', difficulty: 'Difficulty', light: 'Light' },
+} as const;
+
+const enumMap = {
+  hu: {
+    easy: 'Könnyű', medium: 'Közepes', hard: 'Nehéz',
+    low: 'Alacsony', moderate: 'Közepes', high: 'Magas',
+  },
+  en: {
+    easy: 'Easy', medium: 'Medium', hard: 'Hard',
+    low: 'Low', moderate: 'Moderate', high: 'High',
+  },
+} as const;
+
+const t = labels[locale as keyof typeof labels] ?? labels.hu;
+const e = enumMap[locale as keyof typeof enumMap] ?? enumMap.hu;
+
+function translateValue(value: string | null | undefined): string {
+  if (!value) return '';
+  return e[value as keyof typeof e] ?? value;
+}
 ---
 
 <section>
@@ -27,8 +53,8 @@ const {
               {card.title}
             </h4>
             <p class="text-gray-500 leading-loose">{card.description}</p>
-            <p class="text-gray-500 leading-loose"><strong>Vízigény:</strong>{card.watering}</p>
-            <p class="text-gray-500 leading-loose"><strong>Nehézség:</strong>{card.difficulity}</p>
+            <p class="text-gray-500 leading-loose"><strong>{t.watering}: </strong>{translateValue(card.watering)}</p>
+            <p class="text-gray-500 leading-loose"><strong>{t.difficulty}: </strong>{translateValue(card.difficulity)}</p>
         </div>
       );
     })

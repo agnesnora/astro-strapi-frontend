@@ -4,7 +4,7 @@ import BlockRenderer from "../../components/blocks/BlockRenderer.astro";
 
 import { getLandingPageData } from "../../lib/loader";
 
-const locale = "en";
+const locale = Astro.currentLocale ?? 'hu';
 const data = await getLandingPageData(locale);
 
 const landingPage = data?.data;
@@ -12,6 +12,6 @@ const landingPage = data?.data;
 if (!landingPage) throw new Error("Landing page not found");
 ---
 
-<BaseLayout locale={locale}>
-  <BlockRenderer blocks={landingPage.blocks} />
+<BaseLayout>
+  <BlockRenderer blocks={landingPage.blocks} locale={locale} page={landingPage} />
 </BaseLayout>

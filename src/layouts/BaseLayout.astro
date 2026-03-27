@@ -6,13 +6,10 @@ import Footer from '../components/Footer.astro';
 import Banner from "../components/Banner.astro"
 
 interface Props {
-  locale?: string;
   page?: any;
 }
-const currentPath = Astro.url.pathname;
-const locale = currentPath.startsWith('/en') ? 'en' : 'hu';
 
-
+const locale = Astro.currentLocale ?? 'hu';
 const { page } = Astro.props;
 const data = await getGlobalPageData(locale);
 const { header, banner, footer } = data;

@@ -6,35 +6,26 @@ import { marked } from 'marked';
 import type { Article } from '../../../../types/strapi';
 
 
+export async function getStaticPaths() {
+  const plants = await getPlants("hu");
+  return plants.data?.map((plant: any) => ({
+    params: { slug: plant.slug },
+  })) ?? [];
+}
+
 const { slug } = Astro.params;
-const lang = "hu";
+const locale = Astro.currentLocale ?? 'hu';
 
-const plant = await getPlantBySlug(slug, "hu");
-
-
+const plant = await getPlantBySlug(slug, locale);
 
 if (!plant) {
   throw new Error("Plant not found");
 }
 
-export async function getStaticPaths() {
-  const plants = await getPlants("hu");
-
-  console.log("EN ARTICLES:", plants.data.map(p=> p.slug));
-
-  return plants.data?.map((plant: any) => ({
-    params: { slug: plant.slug },
-  }));
-}
-
-
-// const globalData = await getGlobalPageData();
 const htmlContent = plant.description ? marked(plant.description) : '';
-const currentPath = Astro.url.pathname;
-const locale = currentPath.startsWith('/en') ? 'en' : 'hu';
 ---
 
-<BaseLayout locale={locale}>
+<BaseLayout>
   <article class="py-16">
     <div class="container mx-auto px-4 max-w-4xl">
       

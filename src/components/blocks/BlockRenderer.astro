@@ -30,15 +30,15 @@ const componentMap: Record<ComponentType, any> = {
   "blocks.items": null,
 };
 
-const { blocks } = Astro.props;
+const { blocks, locale, page } = Astro.props;
 
 ---
 <div class="block-renderer">
   {
     blocks.map((block: BlockData) => { 
-      console.log(block, "block.data");
+      
       const Component = componentMap[block.__component];
-      return Component ? <Component data={block} /> : null;
+      return Component ? <Component data={block} locale={locale} page={page} /> : null;
     })
   }
 </div>

@@ -2,22 +2,22 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getArticles } from '../../../lib/loader';
 import StrapiImage from '../../../components/StrapiImage.astro';
+import { localizeHref } from '../../../lib/i18n';
 
 
-const articlesData = await getArticles("hu");
+const locale = Astro.currentLocale ?? 'hu';
+const articlesData = await getArticles(locale);
 const articles: any[] = articlesData.data || [];
-const currentPath = Astro.url.pathname;
-const locale = currentPath.startsWith('/en') ? 'en' : 'hu';
 ---
 
-<BaseLayout locale={locale}>
+<BaseLayout>
   <section class="py-16">
     <div class="container mx-auto px-4">
       <h1 class="text-4xl font-bold mb-8">Blog</h1>
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {articles.map((article) => (
-         <a href={`/blog/${article.slug}`}>
+         <a href={localizeHref(`/blog/${article.slug}`, locale)}>
             <article class="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
               {article.featuredImage && (
                 <StrapiImage 

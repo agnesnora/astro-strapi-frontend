@@ -1,32 +1,20 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import BlockRenderer from '../../../components/blocks/BlockRenderer.astro';
-import { getPageBySlug, getPages } from '../../../lib/loader';
-
-const currentPath = Astro.url.pathname;
-const locale = currentPath.startsWith('/en') ? 'en' : 'hu';
+import { getPages } from '../../../lib/loader';
 
 export async function getStaticPaths() {
-  const locales = ['hu', 'en'];
-
-  const paths = [];
-
-  for (const locale of locales) {
-    const pages = await getPages(locale);
-
-    for (const page of pages.data || []) {
-      paths.push({
-        params: { locale, slug: page.slug },
-        props: { page, locale },
-      });
-    }
-  }
-
-  return paths;
+  const pages = await getPages('en');
+  return pages.data?.map((page: any) => ({
+    params: { slug: page.slug },
+    props: { page },
+  })) ?? [];
 }
+
 const { page } = Astro.props;
+const locale = Astro.currentLocale ?? 'en';
 ---
 
-<BaseLayout locale={locale}>
-  <BlockRenderer blocks={page.blocks} />
+<BaseLayout page={page}>
+  <BlockRenderer blocks={page.blocks} locale={locale} page={page} />
 </BaseLayout>

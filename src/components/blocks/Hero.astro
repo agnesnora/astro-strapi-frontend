@@ -1,15 +1,17 @@
  ---
 import type { HeroProps } from "../../types/strapi";
 import StrapiImage from "../StrapiImage.astro";
+import { localizeHref } from "../../lib/i18n";
 
 interface Props {
   data: HeroProps;
+  locale: string; 
 }
 
 const {
   data: { heading, text, image, links },
+  locale
 } = Astro.props;
-
 
 ---
 
@@ -27,9 +29,17 @@ const {
             <div class="max-w-sm mx-auto lg:mx-0">
               <p class="mb-6 text-gray-400 leading-loose">{text}</p>
               { links && links.map((link) => {
-                const isPrimary = link.type === "PRIMARY" ? "bg-green-600 hover:bg-green-700 text-white" : "bg-white hover:bg-gray-50 text-black";
-                return <a class={`inline-block mb-3 lg:mb-0 lg:mr-3 w-full lg:w-auto py-2 px-6 leading-loose ${isPrimary} font-semibold rounded-l-xl rounded-t-xl transition duration-200`} href={link.href} target={link.isExternal ? "_blank" : "_self"}>{link.label}</a>
-              })}       
+  const isPrimary = link.type === "PRIMARY" ? "bg-green-600 hover:bg-green-700 text-white" : "bg-white hover:bg-gray-50 text-black";
+  return (
+    <a
+      class={`inline-block mb-3 lg:mb-0 lg:mr-3 w-full lg:w-auto py-2 px-6 leading-loose ${isPrimary} font-semibold rounded-l-xl rounded-t-xl transition duration-200`}
+      href={localizeHref(link.href, locale)}
+      target={link.isExternal ? "_blank" : "_self"}
+    >
+      {link.label}
+    </a>
+  );
+})}     
             </div>
           </div>
         </div>

@@ -92,7 +92,7 @@ export interface PlantGridProps extends Base<"blocks.plant-grid"> {
 
 export interface ContentWithImageProps extends Base<"blocks.content-with-image"> {
   heading: string;
-  text: string;
+  content: string;
   link: Link;
   image: Image;
   reversed: boolean;
