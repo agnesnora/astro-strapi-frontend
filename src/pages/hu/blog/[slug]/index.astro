@@ -24,7 +24,7 @@ if (!article) {
   throw new Error("Article not found");
 }
 
-// const globalData = await getGlobalPageData();
+
 const htmlContent = article.content ? marked(article.content) : '';
 ---
 
@@ -32,12 +32,12 @@ const htmlContent = article.content ? marked(article.content) : '';
   <article class="py-16">
     <div class="container mx-auto px-4 max-w-4xl">
       
-      {/* Cikk fejléc */}
+   
       <header class="mb-8">
         <h1 class="text-4xl font-bold mb-4">{article.title}</h1>
         <p class="text-gray-600 text-lg mb-4">{article.description}</p>
         
-        {/* Szerző és dátum */}
+     
         <div class="flex items-center gap-4">
           {article.author?.image && (
             <StrapiImage 
@@ -47,22 +47,23 @@ const htmlContent = article.content ? marked(article.content) : '';
           )}
           <div>
             <p class="font-semibold">{article.author?.fullName}</p>
-            <p class="text-sm text-gray-500">
-              {new Date(article.publishedAt).toLocaleDateString('hu-HU')}
-            </p>
+          <time datetime={article.publishedAt}>
+  {new Date(article.publishedAt).toLocaleDateString('hu-HU')}
+</time>
           </div>
         </div>
       </header>
       
-      {/* Kiemelt kép */}
+ 
       {article.featuredImage && (
         <StrapiImage 
           image={article.featuredImage} 
           class="w-full h-96 object-cover rounded-lg mb-8"
+          alt={article.featuredImage.alternativeText}
         />
       )}
       
-      {/* Cikk tartalma */}
+ 
       <div class="prose prose-lg max-w-none" set:html={htmlContent} />
       
     </div>

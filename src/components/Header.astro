@@ -15,28 +15,10 @@ const { data: { logo, navItems, cta }, locale = "hu", page } = Astro.props;
 const currentPath = Astro.url.pathname;
 
 
-// function localizeHref(href: string | null | undefined): string {
-  
-//   if (!href) {
-//     return '#';
-//   }
-  
-//   if (href.startsWith('/hu') || href.startsWith('/en') || 
-//       href.startsWith('http') || href.startsWith('#') || href.startsWith('//')) {
-//     return href;
-//   }
-  
-//   return `/${locale}${href.startsWith('/') ? href : '/' + href}`;
-// }
-
-
-// function getLocaleHref(targetLocale: string): string {
-//   return `/${targetLocale}`;
-// }
 
 ---
 
-<header class="sticky top-0 z-50">
+<header class="sticky top-0 z-50 max-w-7xl mx-auto">
   <nav class="relative px-6 py-6 flex justify-between items-center bg-white">
     <a class="text-3xl font-bold leading-none" href={logo.logoLink}>
       <StrapiImage src={logo.image.url} alt={logo.image.alternativeText} height={48} width={48} />

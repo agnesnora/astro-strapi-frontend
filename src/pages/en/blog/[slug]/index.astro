@@ -23,8 +23,8 @@ if (!article) {
 }
 
 
-// const globalData = await getGlobalPageData();
-const htmlContent = article.description ? marked(article.description) : '';
+
+const htmlContent = article.content ? marked(article.content) : '';
 ---
 
 <BaseLayout>
@@ -33,22 +33,36 @@ const htmlContent = article.description ? marked(article.description) : '';
       
    
       <header class="mb-8">
-        <h1 class="text-4xl font-bold mb-4">{article.name}</h1>
-        <p class="text-gray-600 text-lg mb-4">{article.shortDescription}</p>
-          <p class="text-gray-600 text-lg mb-4">{article.description}</p>
+        <h1 class="text-4xl font-bold mb-4">{article.title}</h1>
+        <p class="text-gray-600 text-lg mb-4">{article.description}</p>
         
-      
+     
+        <div class="flex items-center gap-4">
+          {article.author?.image && (
+            <StrapiImage 
+              image={article.author.image} 
+              class="w-12 h-12 rounded-full object-cover"
+            />
+          )}
+          <div>
+            <p class="font-semibold">{article.author?.fullName}</p>
+          <time datetime={article.publishedAt}>
+  {new Date(article.publishedAt).toLocaleDateString('gb-GB')}
+</time>
+          </div>
+        </div>
       </header>
       
-   
+ 
       {article.featuredImage && (
         <StrapiImage 
           image={article.featuredImage} 
           class="w-full h-96 object-cover rounded-lg mb-8"
+          alt={article.featuredImage.alternativeText}
         />
       )}
       
-     
+ 
       <div class="prose prose-lg max-w-none" set:html={htmlContent} />
       
     </div>
