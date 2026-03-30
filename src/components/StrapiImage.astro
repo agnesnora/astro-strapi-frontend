@@ -11,9 +11,20 @@ interface Props {
   height?: number;
   width?: number;
   class?: string;
+  loading?: "lazy" | "eager";
+  fetchpriority?: "high" | "low" | "auto";
 }
 
-const { image, src, alt, height = 400, width = 400, class: className } = Astro.props;
+const {
+  image,
+  src,
+  alt,
+  height = 400,
+  width = 400,
+  class: className,
+  loading = "lazy",
+  fetchpriority = "auto",
+} = Astro.props;
 
 // Use image object if provided, otherwise use individual props
 const imageSrc = image?.url ?? src ?? '';
@@ -31,4 +42,4 @@ function getStrapiMedia(url: string | null | undefined) {
 
 const imageUrl = getStrapiMedia(imageSrc);
 ---
-{ imageUrl && <AstroImage src={imageUrl} alt={imageAlt || 'No alternative text'} height={height} width={width} class={className ?? undefined} /> }
+{ imageUrl && <AstroImage src={imageUrl} alt={imageAlt || ''} height={height} width={width} class={className ?? undefined} loading={loading} fetchpriority={fetchpriority} /> }

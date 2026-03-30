@@ -8,6 +8,14 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  image: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.strapiapp.com",
+      },
+    ],
+  },
   i18n: {
     defaultLocale: "hu",
     locales: ["hu", "en"],
