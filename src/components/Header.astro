@@ -20,7 +20,7 @@ const currentPath = Astro.url.pathname;
 
 <header class="sticky top-0 z-50 max-w-7xl mx-auto">
   <nav class="relative px-6 py-6 flex justify-between items-center bg-white">
-    <a class="text-3xl font-bold leading-none" href={logo.logoLink}>
+    <a class="text-3xl font-bold leading-none" href={localizeHref(logo.logoLink, locale)}>
       <StrapiImage src={logo.image.url} alt={logo.image.alternativeText} height={48} width={48} />
     </a>
     <div class="lg:hidden">
@@ -72,7 +72,7 @@ const currentPath = Astro.url.pathname;
         cta && (
           <a
             class="py-2 px-6 bg-green-500 hover:bg-green-600 text-sm text-white font-bold rounded-l-xl rounded-t-xl transition duration-200"
-            href={cta.href}
+            href={localizeHref(cta.href, locale)}
             target={cta.isExternal ? "_blank" : "_self"}
           >
             {cta.label}
@@ -90,7 +90,7 @@ const currentPath = Astro.url.pathname;
       class="relative flex flex-col py-6 px-6 h-full w-full bg-white border-r overflow-y-auto"
     >
       <div class="flex items-center mb-8">
-        <a class="mr-auto text-3xl font-bold leading-none" href={logo.logoLink}>
+        <a class="mr-auto text-3xl font-bold leading-none" href={localizeHref(logo.logoLink, locale)}>
           <StrapiImage class="h-12 w-12" src={logo.image.url} alt={logo.image.alternativeText} height={48} width={48} />
         </a>
         <button class="navbar-close">

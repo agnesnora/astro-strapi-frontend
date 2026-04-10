@@ -3,7 +3,7 @@ export function localizeHref(
   href: string | null | undefined,
   locale: string = "hu",
 ): string {
-  if (!href) return "#";
+  if (!href) return `/${locale}`;
 
   // Ha már teljes URL vagy külső link
   if (
