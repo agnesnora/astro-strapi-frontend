@@ -21,7 +21,7 @@ const currentPath = Astro.url.pathname;
 <header class="sticky top-0 z-50 max-w-7xl mx-auto">
   <nav class="relative px-6 py-6 flex justify-between items-center bg-white">
     <a class="text-3xl font-bold leading-none" href={localizeHref(logo.logoLink, locale)}>
-      <StrapiImage src={logo.image.url} alt={logo.image.alternativeText} height={48} width={48} />
+      <StrapiImage src={logo.image.url} alt={logo.image.alternativeText} height={20} width={146} class="h-5 w-auto" />
     </a>
     <div class="lg:hidden">
       <button class="navbar-burger flex items-center text-green-600 p-3" id="burger-button">
@@ -91,7 +91,7 @@ const currentPath = Astro.url.pathname;
     >
       <div class="flex items-center mb-8">
         <a class="mr-auto text-3xl font-bold leading-none" href={localizeHref(logo.logoLink, locale)}>
-          <StrapiImage class="h-12 w-12" src={logo.image.url} alt={logo.image.alternativeText} height={48} width={48} />
+          <StrapiImage class="h-5 w-auto" src={logo.image.url} alt={logo.image.alternativeText} height={20} width={146} />
         </a>
         <button class="navbar-close">
           <svg
