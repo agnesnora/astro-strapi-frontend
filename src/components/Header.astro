@@ -55,14 +55,14 @@ const currentPath = Astro.url.pathname;
     <div class="hidden lg:flex items-center space-x-4">
       <div class="flex items-center space-x-2">
         <a
-          class={`text-sm font-bold ${locale === 'hu' ? 'text-green-600' : 'text-gray-600 hover:text-gray-800'}`}
+          class={`text-sm font-bold ${locale === 'hu' ? 'text-green-600' : 'text-gray-800 hover:text-gray-800'}`}
          href={getLocaleHref('hu', page)}
         >
           HU
         </a>
-        <span class="text-gray-500">|</span>
+        <span class="text-gray-800">|</span>
         <a
-          class={`text-sm font-bold ${locale === 'en' ? 'text-green-600' : 'text-gray-600 hover:text-gray-800'}`}
+          class={`text-sm font-bold ${locale === 'en' ? 'text-green-600' : 'text-gray-800 hover:text-gray-800'}`}
       href={getLocaleHref('en', page)}
         >
           EN
@@ -95,7 +95,7 @@ const currentPath = Astro.url.pathname;
         </a>
         <button class="navbar-close">
           <svg
-            class="h-6 w-6 text-gray-400 cursor-pointer hover:text-gray-500"
+            class="h-6 w-6 text-gray-400 cursor-pointer hover:00"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -130,14 +130,14 @@ const currentPath = Astro.url.pathname;
         <div class="pt-6">
           <div class="flex justify-center items-center space-x-4 mb-4">
             <a
-              class={`text-sm font-bold ${locale === 'hu' ? 'text-green-600' : 'text-gray-600'}`}
+              class={`text-sm font-bold ${locale === 'hu' ? 'text-green-800' : 'text-gray-800'}`}
           href={getLocaleHref('hu', page)}
             >
               HU
             </a>
-            <span class="text-gray-500">|</span>
+            <span class="800">|</span>
             <a
-              class={`text-sm font-bold ${locale === 'en' ? 'text-green-600' : 'text-gray-600'}`}
+              class={`text-sm font-bold ${locale === 'en' ? 'text-green-800' : 'text-gray-800'}`}
            href={getLocaleHref('en', page)}
             >
               EN
@@ -145,7 +145,7 @@ const currentPath = Astro.url.pathname;
           </div>
           { cta && (
             <a
-              class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-green-600 hover:bg-green-700 rounded-l-xl rounded-t-xl"
+              class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-green-800 hover:bg-green-700 rounded-l-xl rounded-t-xl"
               href={cta.href}
               target={cta.isExternal ? "_blank" : "_self"}
             >{cta.label}</a>
