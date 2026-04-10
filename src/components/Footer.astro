@@ -26,12 +26,13 @@ const currentYear = new Date().getFullYear();
           <a
             class="inline-block text-3xl font-bold leading-none"
             href={localizeHref(logo.logoLink, locale)}
+            aria-label={logo.image.alternativeText ?? 'Főoldal'}
           >
             <StrapiImage
               src={logo.image.url}
               alt={logo.image.alternativeText}
-              height={20}
-              width={146}
+              height={40}
+              width={291}
               class="h-5 w-auto"
             />
           </a>
