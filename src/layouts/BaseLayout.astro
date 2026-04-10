@@ -7,10 +7,26 @@ import Banner from "../components/Banner.astro"
 
 interface Props {
   page?: any;
+  title?: string;
+  description?: string;
 }
 
 const locale = Astro.currentLocale ?? 'hu';
-const { page } = Astro.props;
+const { page, title, description } = Astro.props;
+
+const siteTitle = title
+  ? `${title} | PlantStudio`
+  : locale === 'en'
+    ? 'PlantStudio – Indoor Plants for Your Office'
+    : 'PlantStudio – Irodai szobanövények';
+
+const siteDescription = description ?? (
+  locale === 'en'
+    ? 'Discover the best indoor plants for your office. Improve air quality, reduce stress and boost productivity with greenery.'
+    : 'Fedezd fel a legjobb irodai szobanövényeket. Javítsd a levegő minőségét, csökkentsd a stresszt és növeld a produktivitást zölddel.'
+);
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const data = await getGlobalPageData(locale);
 const { header, banner, footer } = data;
 ---
@@ -22,7 +38,17 @@ const { header, banner, footer } = data;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+
+		<title>{siteTitle}</title>
+		<meta name="description" content={siteDescription} />
+		<meta name="robots" content="index, follow" />
+		<link rel="canonical" href={canonicalURL} />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:title" content={siteTitle} />
+		<meta property="og:description" content={siteDescription} />
+		<meta property="og:locale" content={locale === 'en' ? 'en_US' : 'hu_HU'} />
 	</head>
 	<body>
 		{banner && <Banner data={banner}/>}
